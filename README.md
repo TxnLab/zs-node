@@ -73,9 +73,26 @@ A public, multi-arch (`linux/amd64` + `linux/arm64`) image:
 docker pull ghcr.io/txnlab/zs-node:latest
 ```
 
+Minimal run — `NODE_SERVER_LISTEN=0.0.0.0:9090` is **required** in a container
+(the default `127.0.0.1:9090` is only reachable from the container's own
+loopback):
+
+```sh
+docker run -d --name zs-node --restart unless-stopped \
+  -p 9090:9090 -p 127.0.0.1:9091:9091 \
+  -e NODE_SERVER_LISTEN=0.0.0.0:9090 \
+  -e NODE_SERVER_PRIVATE_LISTEN=:9091 \
+  -e OPERATOR_SIGNING_MNEMONIC="word1 word2 … word25" \
+  -e NODE_LLM_OPENAI_API_KEY=sk-... \
+  -e NODE_HAYAI_SETTLEMENT_DB_PATH=/app/data/settlement.db \
+  -v /etc/zerosignal/config.yaml:/app/config.yaml:ro \
+  -v zs-node-data:/app/data \
+  ghcr.io/txnlab/zs-node:latest --config /app/config.yaml
+```
+
 See the
 [Docker install guide](https://docs.zerosignal.ai/operators/installation) for the
-full `docker run` invocation (config + secrets mounts, listen overrides).
+full walkthrough (config keys, TLS, and listen overrides).
 
 ### Linux / direct download
 
