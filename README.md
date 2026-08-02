@@ -146,7 +146,7 @@ in before the service starts.
 
 ## License
 
-[PolyForm Noncommercial 1.0.0](./LICENSE).
+[Functional Source License 1.1 (FSL-1.1-ALv2)](./LICENSE) — converts to Apache-2.0 two years after each release.
 
 ---
 
